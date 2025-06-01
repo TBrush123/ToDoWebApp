@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Tasks";
+}
+@model List<ToDoList.Models.Task>
+
+<h2>Your Tasks</h2>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Due Date</th>
+        <th>Completed?</th>
+    </tr>
+    @foreach (var task in Model)
+    {
+        <tr>
+            <td>@task.Title</td>
+            <td>@task.DueDate.ToShortDateString()</td>
+            <td>@(task.IsDone ? "Yes" : "No")</td>
+        </tr>
+    }
+</table>
