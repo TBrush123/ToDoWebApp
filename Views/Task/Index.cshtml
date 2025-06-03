@@ -16,7 +16,24 @@
         <tr>
             <td>@task.Title</td>
             <td>@task.DueDate.ToShortDateString()</td>
-            <td>@(task.IsDone ? "Yes" : "No")</td>
+            <td>
+                @if (task.IsDone)
+                {
+                    <span class="text-success">Done</span>
+                }
+                else
+                {
+                    <span class="text-warning">Not done</span>
+                }
+            </td>
+            <td>
+                <form asp-action="ToggleDone" asp-route-id="@task.Id" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-sm btn-secondary">
+                        @(task.IsDone ? "Mark as Not Done" : "Mark as Done")
+                    </button>
+                </form>
+            </td>
         </tr>
     }
 </table>

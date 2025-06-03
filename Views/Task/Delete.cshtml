@@ -1,0 +1,14 @@
+﻿@model ToDoList.Models.Task  
+
+@{  
+    ViewData["Title"] = "Delete Task";  
+}  
+
+<h2>Delete Task</h2>  
+<h3>Are you sure you want to delete your tasks?</h3>  
+<h3>Task title: @Model.Title</h3>  
+
+<form asp-action="Delete" method="post">  
+    <button type="submit" class="btn btn-primary">Delete</button>  
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>  
+</form>
