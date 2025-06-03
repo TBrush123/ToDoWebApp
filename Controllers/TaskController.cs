@@ -12,11 +12,50 @@ namespace ToDoList.Controllers
         {
             _context = context;
         }
-        
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var tasks = await _context.Tasks.ToListAsync();
-            return View(tasks);
+            // Set sort parameters for links
+            ViewData["TitleSortParam"] = sortOrder == "title_asc" ? "title_desc" : "title_asc";
+            ViewData["DueDateSortParam"] = sortOrder == "duedate_asc" ? "duedate_desc" : "duedate_asc";
+            ViewData["IsDoneSortParam"] = sortOrder == "isdone_asc" ? "isdone_desc" : "isdone_asc";
+            ViewData["CategorySortParam"] = sortOrder == "category_asc" ? "category_desc" : "category_asc";
+
+            var tasks = from t in _context.Tasks
+                        select t;
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    tasks = tasks.OrderByDescending(t => t.Title);
+                    break;
+                case "title_asc":
+                    tasks = tasks.OrderBy(t => t.Title);
+                    break;
+                case "duedate_desc":
+                    tasks = tasks.OrderByDescending(t => t.DueDate);
+                    break;
+                case "duedate_asc":
+                    tasks = tasks.OrderBy(t => t.DueDate);
+                    break;
+                case "isdone_desc":
+                    tasks = tasks.OrderByDescending(t => t.IsDone);
+                    break;
+                case "isdone_asc":
+                    tasks = tasks.OrderBy(t => t.IsDone);
+                    break;
+                case "category_desc":
+                    tasks = tasks.OrderByDescending(t => t.Category);
+                    break;
+                case "category_asc":
+                    tasks = tasks.OrderBy(t => t.Category);
+                    break;
+                default:
+                    tasks = tasks.OrderBy(t => t.Title); // default sort
+                    break;
+            }
+
+            return View(await tasks.ToListAsync());
         }
 
         [HttpPost]

@@ -12,6 +12,6 @@ namespace ToDoList.Models
         public string Description { get; set; }
         public bool IsDone { get; set; } = false;
         public DateTime DueDate { get; set; }
-
+        public string Category { get; set; } = "General";
     }
 }

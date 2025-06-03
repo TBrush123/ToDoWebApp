@@ -7,9 +7,22 @@
 
 <table>
     <tr>
-        <th>Title</th>
-        <th>Due Date</th>
-        <th>Completed?</th>
+        <th>
+            <span>Title</span>
+            <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParam"]">▲▼</a>
+        </th>
+		<th>
+            <span>DueDate</span>
+            <a asp-action="Index" asp-route-sortOrder="@ViewData["DueDateSortParam"]">▲▼</a>
+        </th>
+		<th>
+            <span>Completed?</span>
+            <a asp-action="Index" asp-route-sortOrder="@ViewData["IsDoneSortParam"]">▲▼</a>
+        </th>
+		<th>
+            <span>Category</span>
+            <a asp-action="Index" asp-route-sortOrder="@ViewData["CategorySortParam"]">▲▼</a>
+        </th>
     </tr>
     @foreach (var task in Model)
     {
@@ -26,6 +39,7 @@
                     <span class="text-warning">Not done</span>
                 }
             </td>
+            <td>@task.Category</td>
             <td>
                 <form asp-action="ToggleDone" asp-route-id="@task.Id" method="post">
                     @Html.AntiForgeryToken()
